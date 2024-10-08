@@ -24,7 +24,7 @@ class RegistrationModel(BaseModel):
         Validate password
         '''
         if len(v) < 6:
-            raise ValueError('Password must be at least 8 characters long')
+            raise ValueError('Password must be at least 6 characters long')
         return v
     
     @validator('first_name')
