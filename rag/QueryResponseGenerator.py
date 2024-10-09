@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import AzureChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from AzureSearchContentRetriever import AzureSearchContentRetriever
+from rag.AzureSearchContentRetriever import AzureSearchContentRetriever
 
 # Load environment variables
 load_dotenv(dotenv_path="../.env")

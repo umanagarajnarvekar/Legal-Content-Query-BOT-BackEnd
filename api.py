@@ -4,7 +4,10 @@ import psycopg2
 from dotenv import load_dotenv
 from models.RegistrationModel import RegistrationModel
 from models.Login import Login
+from models.ChatQueryModel import ChatQueryModel
 from db.blob_storage import BlobStorageDatabase
+from rag.QueryResponseGenerator import QueryResponseGenerator
+from rag.PdfDataIngestor import DataIngestor
 
 app = FastAPI()
 load_dotenv()
@@ -88,6 +91,8 @@ def upload_legal_doc(request: Request, file: UploadFile = File(...)):
         # Upload the file to Azure Blob Storage
         blob_client.upload_blob(file.file)
         print(f"File uploaded: {file.filename}")
+        # data_ingestor = DataIngestor()
+        # result = data_ingestor.ingest_data(file.filename)
 
     except Exception as e:
         return {
@@ -105,13 +110,18 @@ def upload_legal_doc(request: Request, file: UploadFile = File(...)):
         }
 
 @app.post("/legal-bot")
-def legal_bot():
+def legal_bot(request: Request, query_data: ChatQueryModel):
     """
     Legal bot
     """
+
+    content_generation_object = QueryResponseGenerator()
+    # query to retrieve documents
+    response = content_generation_object.get_chat_query_response(query_data.query)
+
     return {
         "status_code": 200,
-        "message": "Legal bot",
+        "message": response,
     }
 
 @app.get("/list-users")

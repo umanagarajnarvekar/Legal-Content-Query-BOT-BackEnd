@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain.vectorstores.azuresearch import AzureSearch
-from PdfDataExtractor import PDFExtractor
+from rag.PdfDataExtractor import PDFExtractor
 from azure.storage.blob import BlobServiceClient
 import tempfile
 
